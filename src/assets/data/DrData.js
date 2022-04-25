@@ -10,12 +10,8 @@ const DrData =[{
     timing:[
         {
             id:1,
-            MorningA: '08:30AM',
-            MorningB: '08:30AM',
-            MorningC: '08:30AM',
-            MorningD: '08:30AM',
-            MorningE: '08:30AM',
-            MorningF: '08:30AM',
+            Morning: '08:30AM',
+    
         }
     ]
 },
