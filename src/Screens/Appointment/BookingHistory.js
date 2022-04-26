@@ -20,6 +20,7 @@ const BookingHistory = () => {
       </View>
       <View style={{flex: 1}}>
       <BookingHistoryCard />
+      <BookingHistoryCard />
       </View>
       
     </View>

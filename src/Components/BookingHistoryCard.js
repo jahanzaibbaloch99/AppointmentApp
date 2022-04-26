@@ -19,18 +19,18 @@ const BookingHistoryCard = () => {
         </View>
       </View>
       <View>
-        <View>
+        <View style={{flexDirection:'row'}}>
           <Ionicons name="navigate" size={18} color="#000" />
           <Text style={{color: '#000'}}>Cardiologist 106 Medlicott rd</Text>
         </View>
-        <View>
+        <View style={{flexDirection:'row'}}>
           <Ionicons
             name="time-outline"
             color="#000"
             size={22}
             style={{marginRight: 5}}
           />
-          <Text style={{color: '#000'}}>Open Until 20:00PM</Text>
+          <Text style={{color: '#000',}}>Open Until 20:00PM</Text>
         </View>
       </View>
     </View>
