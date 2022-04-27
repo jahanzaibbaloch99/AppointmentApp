@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const BookingHistoryCard = () => {
+const BookingHistoryCard = (props) => {
   return (
     <View
       style={{
@@ -15,7 +15,7 @@ const BookingHistoryCard = () => {
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View style={{marginTop: 10}}>
           <Text style={{color: '#000', fontSize: 22, fontWeight: '600'}}>
-            Dr Zakaria
+            {props.name}
           </Text>
 
           <Text style={{color: 'black'}}>Rating</Text>
