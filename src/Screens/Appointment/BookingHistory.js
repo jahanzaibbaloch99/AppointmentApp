@@ -19,8 +19,8 @@ const BookingHistory = () => {
         </View>
       </View>
       <View style={{flex: 1}}>
-      <BookingHistoryCard name="Dr Zakaria"/>
-      <BookingHistoryCard name="Dr Zakaria"/>
+      <BookingHistoryCard name="Dr Zakaria" address="Cardiologist 106 Medlicott rd" time="Open Until 20:00PM"/>
+      <BookingHistoryCard name="Dr Zakaria" address="Cardiologist 106 Medlicott rd" time="Open Until 20:00PM"/>
       </View>
       
     </View>

@@ -34,7 +34,7 @@ const BookingHistoryCard = (props) => {
             <Ionicons name="navigate" size={18} color="#000" />
           </View>
           <View style={{marginLeft: 10}}>
-            <Text style={{color: 'grey'}}>Cardiologist 106 Medlicott rd</Text>
+            <Text style={{color: 'grey'}}>{props.address}</Text>
           </View>
         </View>
         <View style={{flexDirection: 'row'}}>
@@ -42,7 +42,7 @@ const BookingHistoryCard = (props) => {
             <Ionicons name="time-outline" color="#000" size={22} />
           </View>
           <View style={{marginLeft: 10}}>
-            <Text style={{color: 'grey'}}>Open Until 20:00PM</Text>
+            <Text style={{color: 'grey'}}>{props.time}</Text>
           </View>
         </View>
       </View>
