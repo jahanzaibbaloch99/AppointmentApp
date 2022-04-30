@@ -3,16 +3,18 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Signup from '../Screens/Register/Signup';
 import ConfirmAppointment from '../Screens/Appointment/ConfirmAppointment';
-import BookAppointment from '../Screens/Appointment/BookAppointment'
-import BookingDetails from '../Screens/Appointment/BookingDetails'
+import BookAppointment from '../Screens/Appointment/BookAppointment';
+import BookingDetails from '../Screens/Appointment/BookingDetails';
 import BookingHistory from '../Screens/Appointment/BookingHistory';
-
+import {useSelector} from 'react-redux';
 const Stack = createNativeStackNavigator();
 
 function Navigation() {
+  const state = useSelector(ele => ele.AccountReducer.user);
+  const intialRoute = state?.email ? 'BookAppointment' : 'Signup';
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='BookingHistory'>
+      <Stack.Navigator initialRouteName={intialRoute}>
         <Stack.Screen
           name="Signup"
           component={Signup}
@@ -48,7 +50,6 @@ function Navigation() {
             headerShown: false,
           }}
         />
-       
       </Stack.Navigator>
     </NavigationContainer>
   );

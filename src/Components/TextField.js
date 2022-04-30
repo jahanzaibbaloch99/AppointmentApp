@@ -1,27 +1,81 @@
-import React from 'react'
-import { View, TextInput, Text } from 'react-native'
+import React from 'react';
+import {Text, TextInput, StyleSheet, View, Platform} from 'react-native';
+// import TextInputMask from 'react-native-text-input-mask';
 
+const TextInputField = ({
+  field: {name, onBlur, onChange, value},
+  form: {errors, touched, setFieldTouched},
+  isMasked,
+  isPlaceHolder,
+  title,
+  inputStyle,
+  isSecure,
+  subTitle,
+  isDisable,
+  ...inputProps
+}) => {
+  const hasError = errors[name] && touched[name];
 
-const TextField = (props) => {
-    return (       
-    <View >
+  return (
+    <>
+      <View style={{paddingHorizontal: 15}}>
+        <View style={{margin: 5}}>
+          {title && <Text>{title}</Text>}
+          {subTitle && (
+            <Text
+              style={{
+                fontFamily: Fonts.subHeading,
+                color: Colors.secondary,
+              }}>
+              {subTitle}
+            </Text>
+          )}
+        </View>
+
         <TextInput
-            placeholder={props.placeHolder}
-            placeholderTextColor='#AAAAAA'
-            secureTextEntry={props.passwordText}
-            style={{
-                backgroundColor: '#DDDDDD',
-                borderColor: '#DDDDDD',
-                borderWidth: 0.5,
-                paddingHorizontal: 20,
-                marginHorizontal: 15,
-                justifyContent: 'center',
-                marginBottom: 20,
-            }} />
+          editable={!isDisable}
+          secureTextEntry={isSecure}
+          style={[styles.textInput, inputStyle, hasError && styles.errorInput]}
+          value={value}
+          placeholderTextColor={'grey'}
+          onChangeText={text => {
+            if (name === 'email') {
+              let emailText = text.trim();
+              onChange(name)(emailText);
+            } else {
+              onChange(name)(text);
+            }
+          }}
+          onBlur={text => {
+            setFieldTouched(name);
+            onBlur(name);
+          }}
+          {...inputProps}
+        />
+        {/* )} */}
+        {hasError && <Text style={styles.errorText}>{errors[name]}</Text>}
+      </View>
+    </>
+  );
+};
 
-    </View>
+const styles = StyleSheet.create({
+  textInput: {
+    backgroundColor: '#DDDDDD',
+    borderRadius: 25,
+    paddingHorizontal: 15,
+    paddingVertical: Platform.OS === 'android' ? 15 : 15,
+    color: 'black',
+  },
+  errorText: {
+    fontSize: 10,
+    color: 'red',
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+  },
+  errorInput: {
+    borderColor: 'red',
+  },
+});
 
-    )
-}
-
-export default TextField;
+export default TextInputField;
