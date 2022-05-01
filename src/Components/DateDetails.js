@@ -3,14 +3,21 @@ import {View, FlatList} from 'react-native';
 import DrData from '../assets/data/DrData';
 import DateCard from './DateCard';
 
-const DateDetails = () => {
+const DateDetails = props => {
+  const {setSelectedDate, selectedDate, dates} = props;
   return (
     <View style={{alignItems: 'center'}}>
       <FlatList
-        data={DrData[0].dates}
+        data={dates}
         renderItem={data => {
           const {item} = data;
-          return <DateCard {...item} />;
+          return (
+            <DateCard
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              {...item}
+            />
+          );
         }}
         horizontal={true}
         showsHorizontalScrollIndicator={false}

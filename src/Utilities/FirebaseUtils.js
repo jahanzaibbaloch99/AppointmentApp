@@ -10,20 +10,20 @@ export const singInFirebase = async (email, password) => {
   return await Auth().signInWithEmailAndPassword(email, password);
 };
 
-export const getSingleShowroom = async id => {
-  return await fireStore().collection('showrooms').doc(id).get();
+export const getSingleDoctor = async id => {
+  return await fireStore().collection('doctors').doc(id).get();
 };
 
-export const getAllShowrooms = async () => {
-  return await fireStore().collection('showrooms').get();
+export const getAllDoctors = async () => {
+  return await fireStore().collection('doctors').get();
 };
 
-export const confirmOrder = async order => {
-  return await fireStore().collection('orders').add(order);
+export const confirmBookings = async appointment => {
+  return await fireStore().collection('appointments').add(appointment);
 };
 
-export const addShowrooms = async order => {
-  return await fireStore().collection('showrooms').add(order);
+export const addDoctors = async doctors => {
+  return await fireStore().collection('doctors').add(doctors);
 };
 
 export const addUsers = async userObj => {

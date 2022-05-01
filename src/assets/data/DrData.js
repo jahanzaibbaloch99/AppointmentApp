@@ -1,3 +1,4 @@
+import moment from 'moment';
 const DrData = [
   {
     id: 1,
@@ -14,6 +15,7 @@ const DrData = [
       lng: '51.487186507621765',
       ltd: '0.09890182236925893',
     },
+
     dates: [
       {
         id: 1,

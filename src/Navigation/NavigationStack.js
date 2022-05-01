@@ -12,6 +12,7 @@ const Stack = createNativeStackNavigator();
 function Navigation() {
   const state = useSelector(ele => ele.AccountReducer.user);
   const intialRoute = state?.email ? 'BookAppointment' : 'Signup';
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={intialRoute}>

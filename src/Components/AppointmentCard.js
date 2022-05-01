@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Image} from 'react-native';
 import AppButton from './AppButton';
 
-const AppointmentCard = props => {
+const AppointmentCard = ({item, navigation}) => {
   return (
     <View>
       <View
@@ -18,10 +18,22 @@ const AppointmentCard = props => {
           paddingBottom: 20,
         }}>
         <View style={{flexDirection: 'row'}}>
-          <View>
+          <View
+            style={{
+              width: 100,
+              height: 100,
+              borderRadius: 50,
+              overflow: 'hidden',
+            }}>
             <Image
-              style={{width: 100, height: 100, borderRadius: 10}}
-              source={props.displayImage}
+              style={{
+                height: undefined,
+                width: undefined,
+                flex: 1,
+                overflow: 'hidden',
+                resizeMode: 'center',
+              }}
+              source={{uri: item.displayImage}}
             />
           </View>
           <View style={{flex: 1, paddingHorizontal: 10}}>
@@ -31,23 +43,32 @@ const AppointmentCard = props => {
                 fontSize: 18,
                 color: '#000',
               }}>
-              {props.name} {'\n'} {props.specialist}
+              {item.name} {'\n'} {item.specialist}
             </Text>
           </View>
           <View style={{paddingTop: 10}}>
-            <Text style={{color: '#000', fontSize: 14}}>{props.review}</Text>
+            <Text style={{color: '#000', fontSize: 14}}>{item.review}</Text>
           </View>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View style={{width: 80, marginVertical: 10}}>
-            <Text style={{color: '#000', textAlign:'center'}}>{props.experience}</Text>
+            <Text style={{color: '#000', textAlign: 'center'}}>
+              {item.experience}
+            </Text>
           </View>
           <View>
-            <Text style={{color: '#000'}}>{props.fee}</Text>
+            <Text style={{color: '#000'}}>{item.fee}</Text>
           </View>
         </View>
         <View style={{flex: 1}}>
-            <AppButton name={props.booking}/>
+          <AppButton
+            onPress={() => {
+              navigation.navigate('ConfirmAppointment', {
+                item: item,
+              });
+            }}>
+            {item.booking}
+          </AppButton>
         </View>
       </View>
     </View>

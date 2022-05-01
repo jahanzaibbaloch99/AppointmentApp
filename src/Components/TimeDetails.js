@@ -1,9 +1,12 @@
 import React from 'react';
-import {View, FlatList, Text,} from 'react-native';
+import {View, FlatList, Text} from 'react-native';
 import DrData from '../assets/data/DrData';
 import TimeCard from './TimeCard';
 
-const TimeDetails = () => {
+const TimeDetails = props => {
+  console.log(props);
+  const {selectedTime, setSelectedTime, morningTime, eveningTime} = props;
+
   return (
     <>
       <View style={{marginHorizontal: 30}}>
@@ -11,13 +14,13 @@ const TimeDetails = () => {
       </View>
       <View style={{alignItems: 'center'}}>
         <FlatList
-          data={DrData[0].morningTime}
+          data={morningTime}
           renderItem={data => {
             const {item} = data;
             return <TimeCard {...item} />;
           }}
           showsHorizontalScrollIndicator={false}
-          numColumns={Math.ceil(DrData[0].morningTime.length / 2)}
+          numColumns={morningTime && morningTime.length / 2}
         />
       </View>
       <View style={{marginHorizontal: 30}}>
@@ -25,13 +28,13 @@ const TimeDetails = () => {
       </View>
       <View style={{alignItems: 'center'}}>
         <FlatList
-          data={DrData[0].eveningTime}
+          data={eveningTime}
           renderItem={data => {
             const {item} = data;
             return <TimeCard {...item} />;
           }}
           showsHorizontalScrollIndicator={false}
-          numColumns={Math.ceil(DrData[0].eveningTime.length / 2)}
+          numColumns={eveningTime && eveningTime.length / 2}
         />
       </View>
     </>
