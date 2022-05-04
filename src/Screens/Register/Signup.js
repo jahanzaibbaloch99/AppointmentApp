@@ -14,7 +14,7 @@ import {
 } from '../../Utilities/FirebaseUtils';
 import {Formik, Field} from 'formik';
 import {setUserData} from '../../Store/Actions/Account';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {showMessage} from 'react-native-flash-message';
 
 import * as yup from 'yup';
@@ -192,10 +192,14 @@ const Signup = props => {
         return getCurrentUserDetail(id);
       })
       .then(ele => {
-        ele.docs.forEach(ele => {
+        setIsLoading(false);
+        ele.docs.forEach(newElel => {
+          // console.log(newElel.data());
           const user = {
-            ...ele.data(),
+            ...newElel.data(),
           };
+          // console.loq('ELEEEE', user);
+
           dispatch(setUserData(user));
         });
         props.navigation.navigate('BookAppointment');
@@ -206,8 +210,8 @@ const Signup = props => {
     setIsLoading(true);
     singInFirebase(email, password)
       .then(ele => {
+        console.log(ele.user.uid, 'UID');
         userGet(ele.user.uid);
-        setIsLoading(false);
       })
       .catch(e => {
         showMessage({

@@ -5,16 +5,90 @@ import TimeDetails from '../../Components/TimeDetails';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AppButton from '../../Components/AppButton';
 import {Rating} from 'react-native-ratings';
+import DrData from '../../assets/data/DrData';
+import {confirmBookings} from '../../Utilities/FirebaseUtils';
+import ModalLoader from '../../Components/ModalLoader';
+import {useSelector} from 'react-redux';
+
+import {showMessage} from 'react-native-flash-message';
 
 const ConfirmAppointment = props => {
   const [drSlots, setDrSlots] = React.useState({});
-  const [selectedDate, setSelectedDate] = React.useState('');
-  const [selectedTime, setSelectedTime] = React.useState('');
+  const [selectedDate, setSelectedDate] = React.useState(null);
+  const [selectedTime, setSelectedTime] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const state = useSelector(ele => ele.AccountReducer.user);
+  const [dates, setDates] = React.useState(
+    {
+      id: 1,
+      day: 'Mon',
+      date: 3,
+    },
+    {
+      id: 2,
+      day: 'Tues',
+      date: 4,
+    },
+    {
+      id: 3,
+      day: 'Wed',
+      date: 5,
+    },
+    {
+      id: 4,
+      day: 'Thu',
+      date: 6,
+    },
+    {
+      id: 5,
+      day: 'Fri',
+      date: 7,
+    },
+  );
   React.useEffect(() => {
     setDrSlots(props?.route?.params?.item);
   }, []);
-  console.log(drSlots?.morningTime, 'SL');
-
+  const onConfirmAppointment = () => {
+    const appointMent = {
+      userId: state.id,
+      date: selectedDate,
+      time: selectedTime,
+      drName: drSlots.name,
+      speciality: drSlots.specialist,
+      fee: drSlots.fee,
+      location: drSlots.location,
+      city: drSlots.city,
+      image: drSlots.displayImage,
+      // rating: drSlots.rating,
+    };
+    setIsLoading(true);
+    confirmBookings(appointMent)
+      .then(ele => {
+        props.navigation.navigate('BookingDetails', {id: drSlots.id});
+        showMessage({
+          message: 'Success',
+          description: 'Appointment has been Successfully Booked',
+          type: 'success',
+        });
+        setIsLoading(false);
+      })
+      .catch(e => {
+        console.log(e, 'E');
+        showMessage({
+          message: 'Error',
+          description:
+            'Something went wrong while Booking Appointment Please Try again Later',
+          type: 'danger',
+        });
+        setIsLoading(false);
+      });
+  };
+  const isDisabled = () => {
+    if (selectedDate && selectedTime) {
+      return false;
+    }
+    return true;
+  };
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <View style={{flexGrow: 1, backgroundColor: '#fff'}}>
@@ -26,6 +100,7 @@ const ConfirmAppointment = props => {
             paddingBottom: 10,
             borderRadius: 20,
           }}>
+          {isLoading && <ModalLoader />}
           <TouchableOpacity
             onPress={() => {
               props.navigation.goBack();
@@ -36,7 +111,7 @@ const ConfirmAppointment = props => {
           <View style={{flexDirection: 'row'}}>
             <View style={{marginHorizontal: 10}}>
               <Image
-                style={{height: 120, width: 120}}
+                style={{height: 120, width: 120, resizeMode: 'center'}}
                 source={{uri: drSlots?.displayImage}}
               />
             </View>
@@ -82,12 +157,14 @@ const ConfirmAppointment = props => {
               setSelectedTime={val => {
                 setSelectedTime(val);
               }}
-              morningTime={drSlots?.morningTime}
-              eveningTime={drSlots?.eveningTime}
+              morningTime={DrData[0]?.morningTime}
+              eveningTime={DrData[0]?.eveningTime}
             />
           </View>
           <View style={{marginBottom: 10}}>
-            <AppButton>Confirm Appointment</AppButton>
+            <AppButton onPress={onConfirmAppointment} disabled={isDisabled()}>
+              Confirm Appointment
+            </AppButton>
           </View>
         </View>
       </View>

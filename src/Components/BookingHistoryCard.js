@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const BookingHistoryCard = (props) => {
+const BookingHistoryCard = props => {
   return (
     <View
       style={{
@@ -22,8 +22,12 @@ const BookingHistoryCard = (props) => {
         </View>
         <View>
           <Image
-            style={{width: 100, height: 100}}
-            source={require('../assets/images/Dr1.jpg')}
+            style={{
+              width: 100,
+              height: 100,
+              resizeMode: 'center',
+            }}
+            source={{uri: props.image}}
           />
         </View>
       </View>

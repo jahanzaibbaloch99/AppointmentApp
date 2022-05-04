@@ -22,8 +22,16 @@ export const confirmBookings = async appointment => {
   return await fireStore().collection('appointments').add(appointment);
 };
 
+export const getAppointments = async () => {
+  return await fireStore().collection('appointments').get();
+};
+
 export const addDoctors = async doctors => {
   return await fireStore().collection('doctors').add(doctors);
+};
+
+export const getSignleAppointment = async id => {
+  return await fireStore().collection('appointments').doc(id).get();
 };
 
 export const addUsers = async userObj => {

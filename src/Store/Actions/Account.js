@@ -1,7 +1,7 @@
-
-export const setUserData = (payload) => {
-    return {
-        type: "SET_USER",
-        payload: payload
-    }
-}
+export const setUserData = payload => {
+  console.log(payload, 'PAYLOAD');
+  return {
+    type: 'SET_USER',
+    payload: payload,
+  };
+};

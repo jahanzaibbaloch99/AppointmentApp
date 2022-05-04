@@ -17,7 +17,13 @@ const TimeDetails = props => {
           data={morningTime}
           renderItem={data => {
             const {item} = data;
-            return <TimeCard {...item} />;
+            return (
+              <TimeCard
+                setSelectedTime={setSelectedTime}
+                selectedTime={selectedTime}
+                {...item}
+              />
+            );
           }}
           showsHorizontalScrollIndicator={false}
           numColumns={morningTime && morningTime.length / 2}
@@ -31,7 +37,13 @@ const TimeDetails = props => {
           data={eveningTime}
           renderItem={data => {
             const {item} = data;
-            return <TimeCard {...item} />;
+            return (
+              <TimeCard
+                setSelectedTime={setSelectedTime}
+                selectedTime={selectedTime}
+                {...item}
+              />
+            );
           }}
           showsHorizontalScrollIndicator={false}
           numColumns={eveningTime && eveningTime.length / 2}

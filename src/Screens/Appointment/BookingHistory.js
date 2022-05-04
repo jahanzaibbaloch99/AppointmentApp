@@ -1,9 +1,32 @@
 import React from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {View, TouchableOpacity, Text, FlatList} from 'react-native';
 import BookingHistoryCard from '../../Components/BookingHistoryCard';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
+import {getAppointments} from '../../Utilities/FirebaseUtils';
+const BookingHistory = props => {
+  const [appointments, setAppointments] = React.useState([]);
+  const [isLoading, setIsloading] = React.useState(false);
+  React.useEffect(() => {
+    getAllappointments();
+  }, []);
 
-const BookingHistory = () => {
+  const getAllappointments = () => {
+    setIsloading(true);
+    let myApp = [];
+    getAppointments().then(ele => {
+      ele.docs.forEach(ele => {
+        const appobj = {
+          ...ele.data(),
+          id: ele.id,
+        };
+        myApp.push(appobj);
+      });
+      setAppointments(myApp);
+      setIsloading(false);
+    });
+  };
+
   return (
     <View style={{flex: 1}}>
       <View>
@@ -19,10 +42,25 @@ const BookingHistory = () => {
         </View>
       </View>
       <View style={{flex: 1}}>
-      <BookingHistoryCard name="Dr Zakaria" address="Cardiologist 106 Medlicott rd" time="Open Until 20:00PM"/>
-      <BookingHistoryCard name="Dr Zakaria" address="Cardiologist 106 Medlicott rd" time="Open Until 20:00PM"/>
+        <FlatList
+          data={appointments}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  props.navigation.navigate('BookingDetails', {id: item.id});
+                }}>
+                <BookingHistoryCard
+                  name={item.drName}
+                  address={`${item.speciality} , ${item.city}`}
+                  time={`Appointment Time : ${item.time}`}
+                  image={item.image}
+                />
+              </TouchableOpacity>
+            );
+          }}
+        />
       </View>
-      
     </View>
   );
 };
