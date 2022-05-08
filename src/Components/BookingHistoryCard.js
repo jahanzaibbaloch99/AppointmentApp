@@ -17,8 +17,12 @@ const BookingHistoryCard = props => {
           <Text style={{color: '#000', fontSize: 22, fontWeight: '600'}}>
             {props.name}
           </Text>
-
-          <Text style={{color: 'black'}}>Rating</Text>
+          <View style={{flexDirection: 'row'}}>
+            <View>
+              <Ionicons name="star-sharp" size={25} color={'yellow'} />
+            </View>
+            <Text style={{color: 'black'}}>{props.rating}</Text>
+          </View>
         </View>
         <View>
           <Image

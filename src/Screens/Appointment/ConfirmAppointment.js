@@ -23,33 +23,32 @@ const ConfirmAppointment = props => {
     {
       id: 1,
       day: 'Mon',
-      date: new Date(2022, 4, 3),
+      date: new Date(2022, 2, 3),
     },
     {
       id: 2,
       day: 'Tues',
-      date: new Date(2022, 4, 4),
+      date: new Date(2022, 2, 4),
     },
     {
       id: 3,
       day: 'Wed',
-      date: new Date(2022, 4, 5),
+      date: new Date(2022, 2, 5),
     },
     {
       id: 4,
       day: 'Thu',
-      date: new Date(2022, 4, 6),
+      date: new Date(2022, 2, 6),
     },
     {
       id: 5,
       day: 'Fri',
-      date: new Date(2022, 4, 7),
+      date: new Date(2022, 2, 7),
     },
   ]);
   React.useEffect(() => {
     setDrSlots(props?.route?.params?.item);
   }, []);
-  console.log(dates, 'DATE');
   const onConfirmAppointment = () => {
     const appointMent = {
       userId: state.id,
@@ -61,6 +60,7 @@ const ConfirmAppointment = props => {
       location: drSlots.location,
       city: drSlots.city,
       image: drSlots.displayImage,
+      rating: drSlots.rating,
       // rating: drSlots.rating,
     };
     setIsLoading(true);
@@ -135,7 +135,7 @@ const ConfirmAppointment = props => {
               <View style={{marginHorizontal: 10, marginVertical: 10}}>
                 <Rating
                   ratingColor="yellow"
-                  ratingCount={5}
+                  ratingCount={drSlots?.rating}
                   starStyle={{paddingHorizontal: 10}}
                   readonly
                 />

@@ -6,6 +6,7 @@ const initialState = {
     longitudeDelta: 0.0421,
   },
   appointments: [],
+  isDeleted: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -15,13 +16,22 @@ const reducer = (state = initialState, action) => {
         ...state,
         region: action.payload,
       };
+    case 'SET_APPOINTMENT_FIREBASE':
+      return {
+        ...state,
+        appointments: action.payload,
+      };
     case 'SET_APPOINTMENT':
       return {
         ...state,
-        appointments: {
-          ...state.appointments,
-          ...action.payload,
-        },
+        appointments: action.payload,
+      };
+    case 'SET_APPOINTMENT_DELETED':
+      console.log(action.payload.isDeleted);
+      return {
+        ...state,
+        appointments: action.payload.dataArr,
+        isDeleted: action.payload.isDeleted,
       };
     case 'LOG_OUT':
       return {

@@ -14,7 +14,7 @@ const AccountReducerPersistanceConfig = {
 const AppReducerPersistanceConfig = {
   key: 'AppReducer',
   storage: AsyncStorage,
-  whitelist: ['bookmarks'],
+  whitelist: ['appointments'],
 };
 
 // Add them into combined reducers list

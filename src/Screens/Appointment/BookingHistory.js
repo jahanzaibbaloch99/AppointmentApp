@@ -4,11 +4,18 @@ import BookingHistoryCard from '../../Components/BookingHistoryCard';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import {getAppointments} from '../../Utilities/FirebaseUtils';
+import {useSelector, useDispatch} from 'react-redux';
+import {setAppointmentFirebase} from '../../Store/Actions/App';
 const BookingHistory = props => {
+  const dispatch = useDispatch();
+  const state = useSelector(ele => ele.AppReducer.appointments);
+  const isDeleted = useSelector(ele => ele.AppReducer.isDeleted);
   const [appointments, setAppointments] = React.useState([]);
   const [isLoading, setIsloading] = React.useState(false);
   React.useEffect(() => {
-    getAllappointments();
+    if (state?.length < 1) {
+      getAllappointments();
+    }
   }, []);
 
   const getAllappointments = () => {
@@ -22,7 +29,7 @@ const BookingHistory = props => {
         };
         myApp.push(appobj);
       });
-      setAppointments(myApp);
+      dispatch(setAppointmentFirebase(myApp));
       setIsloading(false);
     });
   };
@@ -31,10 +38,14 @@ const BookingHistory = props => {
     <View style={{flex: 1}}>
       <View>
         <View style={{backgroundColor: '#B2EA70', flexDirection: 'row'}}>
-          <TouchableOpacity style={{marginHorizontal: 10, marginVertical: 10}}>
-            <Ionicons name="arrow-back" size={40} color="#000" />
-          </TouchableOpacity>
-          <View style={{justifyContent: 'center', marginLeft: 70}}>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              alignContent: 'center',
+              flex: 1,
+              paddingVertical: 20,
+            }}>
             <Text style={{fontSize: 18, fontWeight: '600'}}>
               Your Booking History
             </Text>
@@ -43,7 +54,8 @@ const BookingHistory = props => {
       </View>
       <View style={{flex: 1}}>
         <FlatList
-          data={appointments}
+          data={state}
+          extraData={isDeleted}
           renderItem={({item}) => {
             return (
               <TouchableOpacity

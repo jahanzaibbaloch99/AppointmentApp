@@ -42,6 +42,10 @@ export const getCurrentUser = async () => {
   return await Auth().currentUser.getIdToken(true);
 };
 
+export const deleteAppointMent = async id => {
+  return await fireStore().collection('appointments').doc(id).delete();
+};
+
 export const getSearchData = async (city, speciality) => {
   if (!city && !speciality) {
     return await fireStore().collection('doctors').get();
