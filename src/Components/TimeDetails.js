@@ -4,7 +4,6 @@ import DrData from '../assets/data/DrData';
 import TimeCard from './TimeCard';
 
 const TimeDetails = props => {
-  console.log(props);
   const {selectedTime, setSelectedTime, morningTime, eveningTime} = props;
 
   return (

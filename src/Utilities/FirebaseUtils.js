@@ -42,6 +42,28 @@ export const getCurrentUser = async () => {
   return await Auth().currentUser.getIdToken(true);
 };
 
+export const getSearchData = async (city, speciality) => {
+  if (!city && !speciality) {
+    return await fireStore().collection('doctors').get();
+  } else if (city && speciality) {
+    return await fireStore()
+      .collection('doctors')
+      .where('city', '==', city)
+      .where('specialist', '==', speciality)
+      .get();
+  } else if (city) {
+    return await fireStore()
+      .collection('doctors')
+      .where('city', '==', city)
+      .get();
+  } else if (speciality) {
+    return await fireStore()
+      .collection('doctors')
+      .where('specialist', '==', speciality)
+      .get();
+  }
+};
+
 export const getCurrentUserDetail = async id => {
   return await fireStore().collection('users').where('id', '==', id).get();
 };

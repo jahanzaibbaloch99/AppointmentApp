@@ -7,9 +7,11 @@ import ConfirmAppointment from '../Screens/Appointment/ConfirmAppointment';
 import BookAppointment from '../Screens/Appointment/BookAppointment';
 import BookingDetails from '../Screens/Appointment/BookingDetails';
 import BookingHistory from '../Screens/Appointment/BookingHistory';
+import MapScreen from '../Screens/Appointment/MapScreen';
+
 const HomeRoutes = () => {
   return (
-    <HomeStack.Navigator initialRouteName="BookAppointment">
+    <HomeStack.Navigator initialRouteName="MapScreen">
       <HomeStack.Screen
         options={{
           headerShown: false,
@@ -25,6 +27,14 @@ const HomeRoutes = () => {
         scree
         name="ConfirmAppointment"
         component={ConfirmAppointment}
+      />
+      <HomeStack.Screen
+        options={{
+          headerShown: false,
+        }}
+        scree
+        name="MapScreen"
+        component={MapScreen}
       />
       <HomeStack.Screen
         options={{

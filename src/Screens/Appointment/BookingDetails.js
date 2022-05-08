@@ -13,7 +13,6 @@ const BookingDetail = props => {
   }, []);
 
   const getappointment = id => {
-    console.log(id, 'ID');
     setIsLoading(true);
     getSignleAppointment(id).then(ele => {
       setIsLoading(false);
@@ -58,9 +57,14 @@ const BookingDetail = props => {
             justifyContent: 'space-evenly',
             alignItems: 'center',
           }}>
-          <View>
+          <View style={{width: 100, height: 100}}>
             <Image
-              style={{width: 100, height: 100}}
+              style={{
+                flex: 1,
+                height: undefined,
+                width: undefined,
+                resizeMode: 'center',
+              }}
               source={{uri: bookingDetails?.image}}
             />
           </View>

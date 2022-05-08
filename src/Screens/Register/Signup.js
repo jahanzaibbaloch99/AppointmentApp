@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TextField from '../../Components/TextField';
 import AppButton from '../../Components/AppButton';
@@ -202,7 +202,7 @@ const Signup = props => {
 
           dispatch(setUserData(user));
         });
-        props.navigation.navigate('BookAppointment');
+        props.navigation.navigate('BottomStack');
       });
   };
 
@@ -210,7 +210,6 @@ const Signup = props => {
     setIsLoading(true);
     singInFirebase(email, password)
       .then(ele => {
-        console.log(ele.user.uid, 'UID');
         userGet(ele.user.uid);
       })
       .catch(e => {
@@ -279,68 +278,70 @@ const Signup = props => {
   const [isActive, setIsActive] = useState(true);
   return (
     <View style={{flex: 1, backgroundColor: '#CCD1E4'}}>
-      {loading && <ModalLoader />}
-      <View style={{flex: 1}}>
-        <View style={{alignItems: 'center', marginTop: 50}}>
-          <Ionicons name="md-person-add" size={100} color="#000" />
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        {loading && <ModalLoader />}
+        <View style={{flex: 1}}>
+          <View style={{alignItems: 'center', marginTop: 50}}>
+            <Ionicons name="md-person-add" size={100} color="#000" />
+          </View>
         </View>
-      </View>
-      <View style={{flex: 2.5}}>
-        <View
-          style={{
-            backgroundColor: '#fff',
-            marginHorizontal: 10,
-            paddingBottom: 40,
-          }}>
+        <View style={{flex: 2.5}}>
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-              marginBottom: 50,
+              backgroundColor: '#fff',
+              marginHorizontal: 10,
+              paddingBottom: 40,
             }}>
-            <TouchableOpacity
+            <View
               style={{
-                backgroundColor: isActive === true ? '#fff' : '#DDDDDD',
-                paddingVertical: 20,
-                paddingHorizontal: 66,
-              }}
-              onPress={() => {
-                setIsActive(true);
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                marginBottom: 50,
               }}>
-              <Text
+              <TouchableOpacity
                 style={{
-                  fontWeight: '700',
-                  color: '#000',
+                  backgroundColor: isActive === true ? '#fff' : '#DDDDDD',
+                  paddingVertical: 20,
+                  paddingHorizontal: 66,
+                }}
+                onPress={() => {
+                  setIsActive(true);
                 }}>
-                SIGN UP
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                backgroundColor: isActive === false ? '#fff' : '#DDDDDD',
-                paddingVertical: 20,
-                paddingHorizontal: 66,
-              }}
-              onPress={() => {
-                setIsActive(false);
-              }}>
-              <Text style={{fontWeight: '700', color: '#000'}}>LOG IN</Text>
-            </TouchableOpacity>
-          </View>
-          <View>
-            {isActive ? (
-              <Register singupConfirm={singupConfirm} />
-            ) : (
-              <Login singInConfim={singInConfim} />
-            )}
-          </View>
-          <View style={{marginVertical: 10}}>
-            <AppButton onPress={googleSiginMethod}>
-              Sign In Via Google
-            </AppButton>
+                <Text
+                  style={{
+                    fontWeight: '700',
+                    color: '#000',
+                  }}>
+                  SIGN UP
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: isActive === false ? '#fff' : '#DDDDDD',
+                  paddingVertical: 20,
+                  paddingHorizontal: 66,
+                }}
+                onPress={() => {
+                  setIsActive(false);
+                }}>
+                <Text style={{fontWeight: '700', color: '#000'}}>LOG IN</Text>
+              </TouchableOpacity>
+            </View>
+            <View>
+              {isActive ? (
+                <Register singupConfirm={singupConfirm} />
+              ) : (
+                <Login singInConfim={singInConfim} />
+              )}
+            </View>
+            <View style={{marginVertical: 10}}>
+              <AppButton onPress={googleSiginMethod}>
+                Sign In Via Google
+              </AppButton>
+            </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 };

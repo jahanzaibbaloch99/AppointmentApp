@@ -8,46 +8,48 @@ import {Rating} from 'react-native-ratings';
 import DrData from '../../assets/data/DrData';
 import {confirmBookings} from '../../Utilities/FirebaseUtils';
 import ModalLoader from '../../Components/ModalLoader';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {showMessage} from 'react-native-flash-message';
-
+import {setAppointments} from '../../Store/Actions/App';
 const ConfirmAppointment = props => {
+  const dispatch = useDispatch();
   const [drSlots, setDrSlots] = React.useState({});
   const [selectedDate, setSelectedDate] = React.useState(null);
   const [selectedTime, setSelectedTime] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const state = useSelector(ele => ele.AccountReducer.user);
-  const [dates, setDates] = React.useState(
+  const [dates, setDates] = React.useState([
     {
       id: 1,
       day: 'Mon',
-      date: 3,
+      date: new Date(2022, 4, 3),
     },
     {
       id: 2,
       day: 'Tues',
-      date: 4,
+      date: new Date(2022, 4, 4),
     },
     {
       id: 3,
       day: 'Wed',
-      date: 5,
+      date: new Date(2022, 4, 5),
     },
     {
       id: 4,
       day: 'Thu',
-      date: 6,
+      date: new Date(2022, 4, 6),
     },
     {
       id: 5,
       day: 'Fri',
-      date: 7,
+      date: new Date(2022, 4, 7),
     },
-  );
+  ]);
   React.useEffect(() => {
     setDrSlots(props?.route?.params?.item);
   }, []);
+  console.log(dates, 'DATE');
   const onConfirmAppointment = () => {
     const appointMent = {
       userId: state.id,
@@ -64,7 +66,12 @@ const ConfirmAppointment = props => {
     setIsLoading(true);
     confirmBookings(appointMent)
       .then(ele => {
-        props.navigation.navigate('BookingDetails', {id: drSlots.id});
+        const persistData = {
+          ...appointMent,
+          id: ele.id,
+        };
+        dispatch(setAppointments(persistData));
+        props.navigation.navigate('BookingDetails', {id: ele.id});
         showMessage({
           message: 'Success',
           description: 'Appointment has been Successfully Booked',
@@ -73,7 +80,6 @@ const ConfirmAppointment = props => {
         setIsLoading(false);
       })
       .catch(e => {
-        console.log(e, 'E');
         showMessage({
           message: 'Error',
           description:
@@ -148,7 +154,7 @@ const ConfirmAppointment = props => {
                 setSelectedDate(val);
               }}
               selectedDate={selectedDate}
-              dates={drSlots?.dates}
+              dates={dates}
             />
           </View>
           <View>

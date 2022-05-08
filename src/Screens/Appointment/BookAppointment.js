@@ -10,29 +10,30 @@ import moment from 'moment';
 import {duration} from 'moment';
 const BookAppointment = props => {
   const [drData, setDrData] = React.useState([]);
-  const [isLoading, setIsloading] = React.useState(false);
   React.useEffect(() => {
-    setIsloading(true);
-    getAllDoctors()
-      .then(ele => {
-        let doctorDataa = [];
-        ele.docs.forEach(data => {
-          const obj = {
-            ...data.data(),
-            id: data.id,
-          };
-          doctorDataa.push(obj);
-        });
-        setDrData(doctorDataa);
-        setIsloading(false);
-      })
-      .catch(e => {
-        setIsloading(false);
-      });
+    setDrData(props.route.params.data);
   }, []);
+  // React.useEffect(() => {
+  //   setIsloading(true);
+  //   getAllDoctors()
+  //     .then(ele => {
+  //       let doctorDataa = [];
+  //       ele.docs.forEach(data => {
+  //         const obj = {
+  //           ...data.data(),
+  //           id: data.id,
+  //         };
+  //         doctorDataa.push(obj);
+  //       });
+  //       setDrData(doctorDataa);
+  //       setIsloading(false);
+  //     })
+  //     .catch(e => {
+  //       setIsloading(false);
+  //     });
+  // }, []);
   return (
     <View style={{flex: 1}}>
-      {isLoading && <ModalLoader />}
       <View style={{flex: 0.5, backgroundColor: '#B2EA70'}}>
         <View
           style={{flexDirection: 'row', marginTop: 60, marginHorizontal: 10}}>
