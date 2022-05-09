@@ -3,9 +3,9 @@ import {Text, View} from 'react-native';
 import Navigation from './src/Navigation/NavigationStack';
 import FlashMessage from 'react-native-flash-message';
 import {Provider as ReduxProvider} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react';
+import {PersistGate} from 'redux-persist/integration/react'; // persist Gate Context Component to Connect the App with React Persistance
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {store, persistor} from './src/Store/Index';
+import {store, persistor} from './src/Store/Index'; // persistor where our Persist Data Configured
 const App = () => {
   React.useEffect(() => {
     GoogleSignin.configure({
